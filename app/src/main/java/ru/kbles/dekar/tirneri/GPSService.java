@@ -11,12 +11,10 @@ import android.os.IBinder;
 import android.os.Looper;
 import android.util.Log;
 
-import static android.os.SystemClock.sleep;
 
-/**
- * Created by 1 on 21.10.2015.
- */
 public class GPSService extends Service {
+
+    static int myID = 1;
 
     @Override
     public IBinder onBind (Intent intent){
@@ -28,7 +26,6 @@ public class GPSService extends Service {
     {
         Looper.prepare();
         /////////////////////////
-        //GPS.SetUpLocationListener(this);
         LocationManager locationManager = (LocationManager)
                 this.getSystemService(Context.LOCATION_SERVICE);
 
@@ -89,26 +86,17 @@ public class GPSService extends Service {
         if(loc == null)
         {
             JSONSender.sendPoint(
-                    0,
+                    myID,
                     0,
                     0,
                     0);
             return;
         }
         JSONSender.sendPoint(
-                0,
+                myID,
                 loc.getLatitude(),
                 loc.getLongitude(),
                 loc.getAccuracy());
     }
-/*
-    public void update() {
-        String l = GPS.imHere.toString();
-        JSONSender.sendPoint(
-                0,
-                GPS.imHere.getLatitude(),
-                GPS.imHere.getLongitude(),
-                GPS.imHere.getAccuracy());
-    }*/
 
 }
